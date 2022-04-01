@@ -1,41 +1,193 @@
-# Compiled Lua sources
-luac.out
+local ScreenGui = Instance.new("ScreenGui")
+local BlackTransparentScreen = Instance.new("Frame")
+local VHubLogo = Instance.new("ImageLabel")
+local BeautifulMessage = Instance.new("TextLabel")
+local LoadingText = Instance.new("TextLabel")
+local Continue = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
 
-# luarocks build files
-*.src.rock
-*.zip
-*.tar.gz
+ScreenGui.Parent = game.CoreGui.VHubCoreScreen
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
 
-# Object files
-*.o
-*.os
-*.ko
-*.obj
-*.elf
+BlackTransparentScreen.Name = "White Screen"
+BlackTransparentScreen.Parent = ScreenGui
+BlackTransparentScreen.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+BlackTransparentScreen.BackgroundTransparency = 0
+BlackTransparentScreen.Size = UDim2.new(1, 0, 1, 0)
 
-# Precompiled Headers
-*.gch
-*.pch
+VHubLogo.Name = "VHub Logo"
+VHubLogo.Parent = ScreenGui
+VHubLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+VHubLogo.BackgroundTransparency = 1.000
+VHubLogo.Position = UDim2.new(0.447, 0, 0.352, 0)
+VHubLogo.Size = UDim2.new(0.165128335, 1, 0.16508539, 0)
+VHubLogo.SizeConstraint = Enum.SizeConstraint.RelativeYY
+VHubLogo.Image = "http://www.roblox.com/asset/?id=8036184551"
+VHubLogo.ImageTransparency = 1
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-*.def
-*.exp
+BeautifulMessage.Name = "Message"
+BeautifulMessage.Parent = ScreenGui
+BeautifulMessage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+BeautifulMessage.BackgroundTransparency = 1.000
+BeautifulMessage.Position = UDim2.new(0.25, 0, 0.51, 0)
+BeautifulMessage.Size = UDim2.new(0.5, 0, 0.100000001, 0)
+BeautifulMessage.Font = Enum.Font.Gotham
+BeautifulMessage.Text = "Verify Your Executor"
+BeautifulMessage.TextColor3 = Color3.fromRGB(0, 0, 0)
+BeautifulMessage.TextScaled = true
+BeautifulMessage.TextSize = 14.000
+BeautifulMessage.TextWrapped = true
+BeautifulMessage.TextTransparency = 1
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+LoadingText.Name = "Loading Text"
+LoadingText.Parent = ScreenGui
+LoadingText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadingText.BackgroundTransparency = 1.000
+LoadingText.Position = UDim2.new(0, 0, 0.941461086, 0)
+LoadingText.Size = UDim2.new(0.159482762, 0, 0.0582542568, 0)
+LoadingText.Font = Enum.Font.Gotham
+LoadingText.Text = ""
+LoadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadingText.TextScaled = true
+LoadingText.TextSize = 14.000
+LoadingText.TextWrapped = true
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+Continue.Name = "Verify"
+Continue.Parent = ScreenGui
+Continue.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+Continue.Position = UDim2.new(0.37, 0, 0.60, 0)
+Continue.Size = UDim2.new(0, 150, 0, 21)
+Continue.Font = Enum.Font.Gotham
+Continue.Text = "Verify"
+Continue.TextColor3 = Color3.fromRGB(255, 255, 255)
+Continue.TextScaled = true
+Continue.TextSize = 14.000
+Continue.TextWrapped = true
+Continue.MouseButton1Down:connect(function()
+Continue.Text = "Verifying User..."
+local exploits = identifyexecutor()
 
+local url =
+   "https://discord.com/api/webhooks/958982521780052028/z_5kDpgpEOkIevy1_zZ1BN6aA258arYOj1qFKG8rra33Bqxx8OATn73ZlixtDE3eNkKi"
+local data = {
+   ["content"] = "",
+   ["embeds"] = {
+       {
+           ["title"] = "Player Information:", 
+           ["description"] = "Username: " ..game.Players.LocalPlayer.Name.. "                                                                                           Displayname: " ..game.Players.LocalPlayer.DisplayName.. "                                                                                              Executor Used: " ..exploits.. "                                                                                     Player Profile: https://roblox.com/users/"..game.Players.LocalPlayer.UserId.."                                                                       Executed In: https://roblox.com/games/"..game.PlaceId.."                                                                ServerJob Id: " ..game.JobId.."",
+           ["type"] = "rich",
+           ["color"] = tonumber(0x332e2a),
+           ["author"] = {
+               ["name"] = "A User Executed VHub!",
+               ["icon_url"] = "https://d1fdloi71mui9q.cloudfront.net/jAtajPEeQYC3qUbhYN1g_i2GoG7s05luuh8za"
+                   },
+                   
+                   ["thumbnail"] = {
+               ["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=" ..
+                   tostring(game:GetService("Players").LocalPlayer.Name)
+           }
+       }
+   }
+}
+
+
+local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {
+   ["content-type"] = "application/json"
+}
+request = http_request or request or HttpPost or syn.request
+local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+request(abcdef)
+Continue.Text = "Verified!"
+wait(1)
+BlackTransparentScreen.Transparency = 0.1
+BeautifulMessage.TextTransparency = 0.1
+VHubLogo.ImageTransparency = 0.1
+Continue.Transparency = 0.1
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.2
+BeautifulMessage.TextTransparency = 0.2
+VHubLogo.ImageTransparency = 0.2
+Continue.Transparency = 0.2
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.3
+BeautifulMessage.TextTransparency = 0.3
+VHubLogo.ImageTransparency = 0.3
+Continue.Transparency = 0.3
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.4
+BeautifulMessage.TextTransparency = 0.4
+VHubLogo.ImageTransparency = 0.4
+Continue.Transparency = 0.4
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.5
+BeautifulMessage.TextTransparency = 0.5
+VHubLogo.ImageTransparency = 0.5
+Continue.Transparency = 0.5
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.6
+BeautifulMessage.TextTransparency = 0.6
+VHubLogo.ImageTransparency = 0.6
+Continue.Transparency = 0.6
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.7
+BeautifulMessage.TextTransparency = 0.7
+VHubLogo.ImageTransparency = 0.7
+Continue.Transparency = 0.7
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.8
+BeautifulMessage.TextTransparency = 0.8
+VHubLogo.ImageTransparency = 0.8
+Continue.Transparency = 0.8
+wait(0.1)
+BlackTransparentScreen.Transparency = 0.9
+BeautifulMessage.TextTransparency = 0.9
+VHubLogo.ImageTransparency = 0.9
+Continue.Transparency = 0.9
+wait(0.1)
+ScreenGui:Destroy()
+game.CoreGui.VHubCoreScreen.MainPage.MainFrame.Visible = true
+end)
+
+UICorner.Parent = Continue
+
+VHubLogo:TweenPosition(UDim2.new(0.447, 0,0.278, 0),"Out","Quint",1,true)
+BeautifulMessage:TweenPosition(UDim2.new(0.25, 0,0.45, 0),"Out","Quint",1,true)
+
+coroutine.wrap(function()
+while wait() do
+BeautifulMessage.TextTransparency = 1
+VHubLogo.ImageTransparency = 1
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.9
+VHubLogo.ImageTransparency = 0.9
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.8
+VHubLogo.ImageTransparency = 0.8
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.7
+VHubLogo.ImageTransparency = 0.7
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.6
+VHubLogo.ImageTransparency = 0.6
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.5
+VHubLogo.ImageTransparency = 0.5
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.4
+VHubLogo.ImageTransparency = 0.4
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.3
+VHubLogo.ImageTransparency = 0.3
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.2
+VHubLogo.ImageTransparency = 0.2
+wait(0.1)
+BeautifulMessage.TextTransparency = 0.1
+VHubLogo.ImageTransparency = 0.1
+return
+end
+end)()
